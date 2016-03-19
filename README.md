@@ -11,6 +11,7 @@ Useful environment:
 * `TARGET`       - (*required*) URL where to POST data in JSON format. Supports redirects (e.x. [Redirect](http://github.com/reddec/redirect/))
 * `APC_APC_HOST` - (*required*) IP address of APC UPS with SNMP access
 * `APC_PORT`     - SNMP APC UPS port. Default is 161
+* `APC_NAME`     - APC custom name. Any string for ID
 * `INTERVAL`     - Interval in seconds between checks. Default is 3
 
 # Example
@@ -26,6 +27,10 @@ Useful environment:
 
 ```json
 {
+    "name": {
+        "type": "string",
+        "value": "APC_NAME"
+    },
     "alarmdel": {
         "type": "seconds",
         "value": "5"

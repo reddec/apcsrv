@@ -35,6 +35,7 @@ def parse(key, value):
 stat_file = os.getenv('STAT_FILE', '/var/log/apcupsd.status')
 interval = int(os.getenv('INTERVAL', '3'))
 target = os.getenv('TARGET', '')
+name = os.getenv('APC_NAME', '')
 
 while True:
     try:
@@ -42,6 +43,7 @@ while True:
             text = fstat.read()
         data = json.dumps(dict(parse(v[0].strip(), v[1].strip()) for v in
                                (line.strip().split(':', 1) for line in text.splitlines() if ':' in text)), indent=4)
+        data['name'] = {'type': 'string', 'value': name}
         print(data)
         requests.post(target, data=data, headers={"Content-Type": "application/json; charset=utf-8"})
     except requests.exceptions.RequestException as ex:
