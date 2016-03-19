@@ -41,9 +41,10 @@ while True:
     try:
         with open(stat_file, 'rt') as fstat:
             text = fstat.read()
-        data = json.dumps(dict(parse(v[0].strip(), v[1].strip()) for v in
-                               (line.strip().split(':', 1) for line in text.splitlines() if ':' in text)), indent=4)
+        data = dict(parse(v[0].strip(), v[1].strip()) for v in
+                    (line.strip().split(':', 1) for line in text.splitlines() if ':' in text))
         data['name'] = {'type': 'string', 'value': name}
+        data = json.dumps(data)
         print(data)
         requests.post(target, data=data, headers={"Content-Type": "application/json; charset=utf-8"})
     except requests.exceptions.RequestException as ex:
